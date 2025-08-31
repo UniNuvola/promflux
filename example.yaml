@@ -1,0 +1,6 @@
+rules:
+    - name: "Rule Name" # Name of the rule that will be saved
+      query: "<query>"  # Query that will generate data
+      start: "1970-01-01 00:00:00 UTC" #[OPZIONALE]
+      end: "1970-01-01 00:00:00 UTC" #[OPZIONALE]
+      step: 1200 | "1d" #[OPZIONALE] https://prometheus.io/docs/prometheus/latest/querying/api/#range-queries

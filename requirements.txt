@@ -1,0 +1,5 @@
+requests
+dotenv
+influxdb3-python
+pyyaml
+dateparser

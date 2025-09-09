@@ -1,0 +1,12 @@
+services:
+    promflux:
+        networks:
+            uninuvola:
+                ipv4_address: ${PROMFLUX_IP}
+        container_name: promflux
+        image: harbor1.fisgeo.unipg.it/uninuvola/promflux:main
+        env_file: ../.env
+
+networks:
+  uninuvola:
+    external: true

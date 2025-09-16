@@ -23,7 +23,7 @@ checkrules()
 
 while true
 do
-	sleep 10
+	sleep 3600
 	checkrules	
 	python3 promflux.py
 done

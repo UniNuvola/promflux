@@ -1,3 +1,18 @@
 rules:
     - name: "Global CPU Usage" # Name of the rule that will be saved
       query: "avg_over_time(cluster:node_cpu:ratio[24h])"  # Query that will generate data
+
+    - name: "Global RAM Usage"
+      query: "sum(node_namespace_pod_container:container_memory_working_set_bytes{namespace=\"unihub\", pod=~\"^jupyter.*\", container=\"notebook\"})"
+
+    - name: "Core Requests per Machine"
+      query: "sum(cluster:namespace:pod_cpu:active:kube_pod_container_resource_requests{namespace=\"unihub\"}) by (node)"
+
+    - name: "RAM Requests per Machine"
+      query: "sum(cluster:namespace:pod_memory:active:kube_pod_container_resource_limits{namespace=\"unihub\"}) by (node)"
+
+    - name: "Total GPU Acquired"
+      query: "sum(kube_pod_container_resource_requests{resource=\"nvidia_com_gpu\", container=\"notebook\"})"
+
+    - name: "Total Active users (avg)"  # TODO: test this query
+      query: "avg_over_time(sum(kube_pod_status_ready{namespace=\"unihub\", pod=~\"^jupyter-.*\"})[1d:])"

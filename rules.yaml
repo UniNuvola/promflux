@@ -1,6 +1,6 @@
 rules:
     - name: "Global CPU Usage" # Name of the rule that will be saved
       query: "avg_over_time(cluster:node_cpu:ratio[24h])"  # Query that will generate data
-      start: "yesterday"
-      end: "today"
-      step: "1d"
+      start: "yesterday midnight"
+      end: "today midnight"
+      step: "24h"

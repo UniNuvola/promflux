@@ -1,6 +1,21 @@
 rules:
-    - name: "Global CPU Usage" # Name of the rule that will be saved
-      query: "avg_over_time(cluster:node_cpu:ratio[24h])"  # Query that will generate data
+    - name: "CPU Usage"
+      query: "avg_over_time(cluster:node_cpu:ratio[24h])"
+      start: "yesterday midnight"
+      end: "today midnight"
+      step: "24h"
+    - name: "GPU Aquired"
+      query: "max_over_time(sum(kube_pod_container_resource_requests{resource=\"nvidia_com_gpu\", container=\"notebook\"})[24h:])"
+      start: "yesterday midnight"
+      end: "today midnight"
+      step: "24h"
+    - name: "Percentual of Aquired Cores"
+      query: "avg_over_time((sum(cluster:namespace:pod_cpu:active:kube_pod_container_resource_requests{namespace=\"unihub\"}) / sum(machine_cpu_cores))[24h:])"
+      start: "yesterday midnight"
+      end: "today midnight"
+      step: "24h"
+    - name: "Percentual of Aquired RAM"
+      query: "avg_over_time((sum(cluster:namespace:pod_memory:active:kube_pod_container_resource_limits{namespace=\"unihub\"})/sum(machine_memory_bytes))[24h:])"
       start: "yesterday midnight"
       end: "today midnight"
       step: "24h"

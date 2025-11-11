@@ -24,3 +24,13 @@ rules:
       start: "yesterday midnight"
       end: "today midnight"
       step: "24h"
+    - name: "Active Users"
+      # Ceiled AVG
+      query: "ceil(avg_over_time((sum(kube_pod_status_ready{namespace=\"unihub\", pod=~\"^jupyter-.*\"}))[24h:]))"
+      # AVG
+      # query: "avg_over_time((sum(kube_pod_status_ready{namespace=\"unihub\", pod=~\"^jupyter-.*\"}))[24h:])"
+      # MAX
+      # query: "max_over_time((sum(kube_pod_status_ready{namespace=\"unihub\", pod=~\"^jupyter-.*\"}))[24h:])"
+      start: "yesterday midnight"
+      end: "today midnight"
+      step: "24h"

@@ -25,12 +25,12 @@ rules:
       end: "today midnight"
       step: "24h"
     - name: "Active Users"
-      # Ceiled AVG
-      query: "ceil(avg_over_time((sum(kube_pod_status_ready{namespace=\"unihub\", pod=~\"^jupyter-.*\"}))[24h:]))"
-      # AVG
-      # query: "avg_over_time((sum(kube_pod_status_ready{namespace=\"unihub\", pod=~\"^jupyter-.*\"}))[24h:])"
-      # MAX
-      # query: "max_over_time((sum(kube_pod_status_ready{namespace=\"unihub\", pod=~\"^jupyter-.*\"}))[24h:])"
+      query: "count(sum by (pod) (avg_over_time(sum by (pod) (node_namespace_pod_container:container_cpu_usage_seconds_total:sum_irate{namespace=\"unihub\", pod=~\"^jupyter.*\", container=\"notebook\"})[24h:])))"
+      start: "yesterday midnight"
+      end: "today midnight"
+      step: "24h"
+    - name: "CPU Usage per User"
+      query: "avg_over_time(sum by (pod) (node_namespace_pod_container:container_cpu_usage_seconds_total:sum_irate{namespace=\"unihub\", pod=~\"^jupyter.*\", container=\"notebook\"})[24h:])"
       start: "yesterday midnight"
       end: "today midnight"
       step: "24h"
